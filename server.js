@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
     user: 'root',
     // Your MySQL password
     password: '',
-    database: 'ice_creamDB'
+    database: 'employees'
   });
   
   connection.connect(err => {
