@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../db/database');
-const inputCheck = require('../../utils/inputCheck');
+const db = require('../db/database');
+const inputCheck = require('../utils/inputCheck');
 
 
 // WHEN I choose to view all departments
 // THEN I am presented with a formatted table showing department names and department ids
-router.get('/employee', (req, res) => {
+router.get('/department', (req, res) => {
     const sql = `SELECT 
                     name, 
                     id
@@ -27,14 +27,14 @@ router.get('/employee', (req, res) => {
 
 // WHEN I choose to add a department
 // THEN I am prompted to enter the name of the department and that department is added to the database
-router.post('/employee', ({ body }, res) => {
+router.post('/department', ({ body }, res) => {
     const errors = inputCheck(body, 'name');
     if (errors) {
       res.status(400).json({ error: errors });
       return;
     }
   
-    const sql =  `INSERT INTO employee (name) 
+    const sql =  `INSERT INTO department (name) 
                   VALUES (?)`;
     const params = [body.name];
     // ES5 function, not arrow function, to use this

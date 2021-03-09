@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../db/database');
-const inputCheck = require('../../utils/inputCheck');
+const db = require('../db/database');
+const inputCheck = require('../utils/inputCheck');
 
 // WHEN I choose to view all roles
 // THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
