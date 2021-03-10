@@ -1,35 +1,35 @@
-INSERT INTO department (name)
+INSERT INTO department (id, name)
 VALUES
-('IT'),
-('Marketing'),
-('Management'),
-('Finance'),
-('HR')
+(1, 'IT'),
+(2, 'Marketing'),
+(3, 'Management'),
+(4, 'Finance'),
+(5, 'HR')
 ;
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO roles (id, title, salary, department_id)
 VALUES
-('Jane','Smith', 1, 3),
-('Alice','Kelley', 2, 4),
-('Hunter','Rogers', 3, 6),
-('Joshua','Phillips', 4, 2),
-('Denise','Moscato', 5, 5),
-('Raymond','Williams', 6, 7),
-('Penelope','Tanture', 7, 3),
-('Oscar','Pharon', 8, 4),
-('Trevor','Ferrell', 1, 3),
-('Matt','Denter', 8, 4),
-('Jordan','Ballin', 6, 3)
+(1, 'Software Developer','100000', 1),
+(2, 'Accountant','90000', 4),
+(3, 'CEO','200000', 3),
+(4, 'CMO','180000', 3),
+(5, 'Account Manager','70000', 2),
+(6, 'Sales Representative','50000', 2),
+(7, 'Administor','60000', 5),
+(8, 'IT Service Desk','55000', 1)
 ;
 
-INSERT INTO roles (title, salary, department_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES
-('Software Developer','100000', 1),
-('Accountant','90000', 4),
-('CEO','200000', 3),
-('CMO','180000', 3),
-('Account Manager','70000', 2),
-('Sales Representative','50000', 2),
-('Administor','60000', 5),
-('IT Service Desk','55000', 1)
+(1, 'Jane','Smith', 1, 3),
+(2, 'Alice','Kelley', 2, 4),
+(3, 'Hunter','Rogers', 3, 5),
+(4, 'Joshua','Phillips', 4, 2),
+(5, 'Denise','Moscato', 5, 1),
+(6, 'Raymond','Williams', 6, 7),
+(7, 'Penelope','Tanture', 7, 3),
+(8, 'Oscar','Pharon', 8, 4),
+(9, 'Trevor','Ferrell', 1, 3),
+(10, 'Matt','Denter', 8, 4),
+(11, 'Jordan','Ballin', 6, 3)
 ;

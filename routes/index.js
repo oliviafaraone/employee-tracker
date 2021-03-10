@@ -2,6 +2,9 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const express = require('express');
 const router = express.Router();
+const empRout = require('./employeeRoutes');
+const db = require('../db/database');
+
 
 router.use(require('./departmentRoutes'));
 router.use(require('./employeeRoutes'));
@@ -11,30 +14,31 @@ router.use(require('./roleRoutes'));
 const addEmp = [
     {type: 'input',
      message: 'What is the employees first name?',
-     name: 'contact'},
+     name: 'first_name'},
 
     {type: 'input',
      message: 'What is the employees last name?',
-     name: 'contact'},
+     name: 'last_name'},
 
     {type: 'list',
      message: 'What is the employees role?',
-     name: 'start',
-     choices: ['View All Employees', 'Add Employee', 'Update Employee Role']}
- ];
+     name: 'role',
+     choices: ['Software Developer', 'Accountant', 'CEO', 'CMO', 'Account Manager', 'Sales Representative', 'Administor', 'IT Service Desk']}
+];
 
 //Update Employee Role Questions
 const updEmp = [
     {type: 'list',
      message: 'Which employee do you want to update?',
      name: 'updateEmp',
-     choices: ['View All Employees', 'Add Employee', 'Update Employee Role']},
-
+     choices: ['Jane Smith', 'Alice Kelley','Hunter Rogers', 'Joshua Phillips', 'Denise Moscato', 
+      'Raymond Williams', 'Penelope Tanture', 'Oscar Pharon', 'Trevor Ferrell', 'Matt Denter', 'Jordan Ballin']},
     {type: 'list',
      message: 'What is their new role?',
      name: 'updateRole',
-     choices: ['View All Employees', 'Add Employee', 'Update Employee Role']}
+     choices: ['Software Developer', 'Accountant', 'CEO', 'CMO', 'Account Manager', 'Sales Representative', 'Administor', 'IT Service Desk']}
 ];
+
 
 // Prompt the user
 function start (){
@@ -44,44 +48,58 @@ function start (){
       message: 'What would you like to do?',
       name: 'start',
       choices: ['View All Employees', 'Add Employee', 'Update Employee Role']
-    }).then(answers=>
-        function nextOptions(answers){
+    }).then(function(answers) {
+        //console.log(answers);
+       // nextOptions(answers)
+        if (answers.start == 'View All Employees'){
             console.log(answers);
-            // if (answers.start == 'View All Employees'){
-            //     //then run view employy table
-            // } else if (answers.start == 'Add Employee'){
-            //     //run follow up Qs
-            //     inquirer.prompt(addEmp)
-            //     .then(data=>
-            //         //update data table
-            //     );
-            // } else if (answers.start == 'Update Employee Role'){
-            //     inquirer.prompt(updEmp)
-            //     .then(data=>);
-            //     //run follow up Qs
-            // }
-        }
-        
+            //displayEmps();
+            displayEmployees();
+            router.get('/employee', (req, res) => {
+                const sql = `SELECT 
+                                employee.id, 
+                                employee.first_name, 
+                                employee.last_name, 
+                                roles.title, 
+                                department.name, 
+                                roles.salary,
+                                employee.manager_id AS manager
+                            FROM employee
+                            INNER JOIN roles ON employee.role_id = roles.id
+                            INNER JOIN department ON roles.department_id = department.id ;`;
+                const params = [];
+                db.all(sql, params, (err, rows) => {
+                  if (err) {
+                    res.status(500).json({ error: err.message });
+                    return;
+                  }
+              
+                  res.json({
+                    message: 'success',
+                    data: rows
+                  });
+                });
+              })
+            //afterConnection();
+            start();
+
+        } else if (answers.start == 'Add Employee'){
+            inquirer.prompt(addEmp)
+           // .then(addEmployee()
+            //.then(start()
+            //)
+            ;
+
+        } else if (answers.start == 'Update Employee Role'){
+            inquirer.prompt(updEmp)
+            //.then(updEm());
+            //run follow up Qs
+                }
+            }
   );
     };
-    start();
-// Write the user response to a file by chaining the below callback method to the prompt above.
-//.then(function(data) {
-    // Bonus: Generate the name of your user file from their input
-//     const filename =
-//       data.name
-//         .toLowerCase()
-//         .split(' ')
-//         .join('') + '.json';
 
-//     fs.writeFile(filename, JSON.stringify(data, null, '\t'), function(err) {
-//       if (err) {
-//         return console.log(err);
-//       }
 
-//       console.log('Success!');
-//     });
-//   });
-
+start();
 
 module.exports = router;

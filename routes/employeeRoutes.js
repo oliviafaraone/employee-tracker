@@ -5,7 +5,7 @@ const inputCheck = require('../utils/inputCheck');
 
 // WHEN I choose to view all employees
 // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-router.get('/employee', (req, res) => {
+function displayEmps (){router.get('/employee', (req, res) => {
     const sql = `SELECT 
                     employee.id, 
                     employee.first_name, 
@@ -29,7 +29,8 @@ router.get('/employee', (req, res) => {
         data: rows
       });
     });
-  });
+  })
+};
   
 // Get single candidate
 router.get('/employee/:id', (req, res) => {
@@ -114,5 +115,7 @@ router.put('/employee/:id', (req, res) => {
         });
       });
   
+ displayEmps ();
+
   
   module.exports = router;
