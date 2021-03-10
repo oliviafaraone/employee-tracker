@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
     // Your MySQL username
     user: 'root',
     // Your MySQL password
-    password: '****',
+    password: 'Fockey226!',
     database: 'employees'
   });
   
@@ -129,7 +129,7 @@ function start (){
         const newEmployee = {
           first_name: data.first_name,
           last_name: data.last_name,
-          role_id: data.new_role
+          role_id: new_role
         };
         const query = connection.query('INSERT INTO employee SET ?', newEmployee, employeeCreated);
         console.table(query.sql);
