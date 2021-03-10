@@ -3,7 +3,6 @@ const mysql = require('mysql2');
 //node console table
 const cTable = require('console.table');
 const router = express.Router();
-
 //const db = require('/db/database');
 
 const PORT = process.env.PORT || 3001;
@@ -44,55 +43,6 @@ const connection = mysql.createConnection({
 // WHEN I start the application
 // THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 
-    displayEmps = () => {
-        connection.query(`SELECT 
-                        employee.id, 
-                        employee.first_name, 
-                        employee.last_name, 
-                        roles.title, 
-                        department.name, 
-                        roles.salary,
-                        employee.manager_id AS manager
-                    FROM employee
-                    INNER JOIN roles ON employee.role_id = roles.id
-                    INNER JOIN department ON roles.department_id = department.id `,
-                    function(err, res) {
-                        if (err) throw err;
-                        console.log(res);
-                        connection.end();
-                      });
-      
-    
-  };
-  
-
-   displayEmployees = () =>
-   {router.get('/employee', (req, res) => {
-    const sql = `SELECT 
-                    employee.id, 
-                    employee.first_name, 
-                    employee.last_name, 
-                    roles.title, 
-                    department.name, 
-                    roles.salary,
-                    employee.manager_id AS manager
-                FROM employee
-                INNER JOIN roles ON employee.role_id = roles.id
-                INNER JOIN department ON roles.department_id = department.id ;`;
-    const params = [];
-    db.all(sql, params, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
-  
-      res.json({
-        message: 'success',
-        data: rows
-      });
-    });
-  })
-};
 
 // Default response for any other request(Not Found) Catch all
 // app.use((req, res) => {
